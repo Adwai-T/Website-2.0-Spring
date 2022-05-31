@@ -1,5 +1,7 @@
 package in.adwait.website.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +24,8 @@ public class User {
     @Column(name = "username")
     private String username;
     @Column(name = "password")
-    private String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;//Only deserialize password.
     @Column(name = "active")
     private boolean active;
     @Column(name="authority")

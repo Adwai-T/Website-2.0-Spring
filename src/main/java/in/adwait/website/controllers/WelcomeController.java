@@ -13,18 +13,4 @@ public class WelcomeController {
         return ResponseEntity.status(HttpStatus.OK).body("Welcome to the website Api service.");
     }
 
-    @GetMapping("admin")
-    public ResponseEntity<String> admin() {
-        return ResponseEntity.status(HttpStatus.OK).body("Welcome ADMIN");
-    }
-
-    @GetMapping("member")
-    public ResponseEntity<String> member() {
-        return ResponseEntity.status(HttpStatus.OK).body("Welcome MEMBER");
-    }
-
-    @GetMapping("user")
-    public ResponseEntity<String> user() {
-        return ResponseEntity.status(HttpStatus.OK).body("Welcome USER");
-    }
 }

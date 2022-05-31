@@ -50,6 +50,6 @@ public class AuthenticationController {
     public ResponseEntity<ErrorResponse> badCredentialsExceptionHandler() {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse(404, "Username or Password incorrect."));
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Username or Password incorrect."));
     }
 }

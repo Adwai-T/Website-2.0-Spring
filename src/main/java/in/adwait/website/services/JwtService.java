@@ -27,6 +27,7 @@ public class JwtService {
         if(algorithm == null) algorithm = Algorithm.HMAC256(secret);
 
         Map<String, Object> payload = new HashMap<>();
+        payload.put("id", user.getId());
 
         String token = JWT.create()
                 .withIssuer(provider)
