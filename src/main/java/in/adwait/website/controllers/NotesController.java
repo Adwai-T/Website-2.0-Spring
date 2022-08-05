@@ -1,8 +1,10 @@
 package in.adwait.website.controllers;
 
-import in.adwait.website.models.ErrorResponse;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import in.adwait.website.interfaces.ServerResponse;
+import in.adwait.website.models.server.ErrorResponse;
 import in.adwait.website.models.Note;
-import in.adwait.website.models.SuccessResponse;
+import in.adwait.website.models.server.SuccessResponse;
 import in.adwait.website.models.User;
 import in.adwait.website.repositories.NotesRepository;
 import in.adwait.website.repositories.UserRepository;
@@ -29,12 +31,18 @@ public class NotesController {
     private UserRepository userRepository;
 
     @PostMapping("save")
-    public ResponseEntity<SuccessResponse> saveNote(
+    public ResponseEntity<ServerResponse> saveNote(
             @RequestHeader("authorization") String jwtHeader, @RequestBody Note note)
             throws UserNotMemberException
     {
-        Integer userId = Integer.getInteger(
-                jwtService.verify(jwtHeader).getClaim("id").toString());
+
+        Long userId = Long.parseLong(jwtService.verify(jwtHeader).getClaim("id").toString());
+
+        if(userId == null)
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                            "Sorry, User with given user ID not found. Please contact Admin."));
+
         Optional<User> user = userRepository.findById(userId);
 
         if(user.isEmpty()) {
@@ -90,7 +98,7 @@ public class NotesController {
             @RequestHeader("authorization") String jwt)
         throws UserNotAuthorizedException
     {
-        Long userId = Long.getLong(jwtService.verify(jwt).getClaim("id").toString());
+        Long userId = Long.parseLong(jwtService.verify(jwt).getClaim("id").toString());
         Optional<Note> note = notesRepository.findById(id);
 
         if(userId == note.get().getUserId()) {
@@ -110,7 +118,7 @@ public class NotesController {
 
         Optional<Note> note = notesRepository.findById(id);
         Optional<User> user = userRepository.findById(
-                Integer.getInteger(jwtService.verify(jwt).getClaim("id").toString()));
+                Long.parseLong(jwtService.verify(jwt).getClaim("id").toString()));
 
         if(note.isPresent() && note.get().getUserId() == user.get().getId()) {
             notesRepository.delete(note.get());

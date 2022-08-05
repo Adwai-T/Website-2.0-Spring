@@ -1,6 +1,6 @@
 package in.adwait.website.controllers;
 
-import in.adwait.website.models.ErrorResponse;
+import in.adwait.website.models.server.ErrorResponse;
 import in.adwait.website.models.security.AuthRequest;
 import in.adwait.website.models.security.AuthResponse;
 import in.adwait.website.services.JwtService;

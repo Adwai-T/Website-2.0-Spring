@@ -1,13 +1,12 @@
 package in.adwait.website.controllers;
 
-import in.adwait.website.models.ErrorResponse;
+import in.adwait.website.models.server.ErrorResponse;
 import in.adwait.website.models.User;
 import in.adwait.website.repositories.UserRepository;
 import in.adwait.website.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
