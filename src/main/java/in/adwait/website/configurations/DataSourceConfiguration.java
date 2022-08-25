@@ -11,6 +11,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 @Configuration
@@ -18,12 +21,15 @@ import java.util.Properties;
 @PropertySource(value = "${sqlDataSource:classpath:config/datasource}.properties")
 public class DataSourceConfiguration {
 
+//    --- from datasource.properties
     @Value("${postgre.username}")
     private String postgre_userName;
     @Value("${postgre.password}")
     private String postgre_password;
     @Value("${postgre.url}")
     private String postgre_url;
+    @Value("${postgre.uri}")
+    private String postgreUri;
 
 //    --- Configure for postgre sql Database
     @Bean(name = "transactionManager")
@@ -32,6 +38,7 @@ public class DataSourceConfiguration {
         manager.setSessionFactory(sessionFactory().getObject());
         return manager;
     }
+
     @Bean(name = "entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
@@ -42,11 +49,34 @@ public class DataSourceConfiguration {
     }
     @Bean
     public DataSource postgreDataSource() {
+
+//        String url = "jdbc:postgresql://Host:Port+Path?sslmode=require";
+//        -- Local Postgre server
+        String url = postgre_url;
+        String password = postgre_password;
+        String username = postgre_userName;
+
+//        -- if on server use environment variables
+        try{
+            URI postgre = new URI(postgreUri);
+            url = "jdbc:postgresql://" + postgre.getHost()
+                    + ':' + postgre.getPort() + postgre.getPath()
+                    + "?sslmode=require";
+            password = postgre.getUserInfo().split(":")[1];
+            username = postgre.getUserInfo().split(":")[0];
+
+            System.out.println("-----> " + url);
+
+        }catch (URISyntaxException e) {
+            System.out.println("Postgre URL could not be fetched or is null.");
+            e.printStackTrace();
+        }
+
         DataSourceBuilder builder = DataSourceBuilder.create();
         builder
-                .url(postgre_url)
-                .password(postgre_password)
-                .username(postgre_userName);
+                .url(url)
+                .password(password)
+                .username(username);
 
         return builder.build();
     }
