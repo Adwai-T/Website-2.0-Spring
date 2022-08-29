@@ -1,25 +1,23 @@
 package in.adwait.website.controllers;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import in.adwait.website.interfaces.ServerResponse;
-import in.adwait.website.models.server.ErrorResponse;
 import in.adwait.website.models.Note;
-import in.adwait.website.models.server.SuccessResponse;
 import in.adwait.website.models.User;
+import in.adwait.website.models.server.ErrorResponse;
+import in.adwait.website.models.server.SuccessResponse;
 import in.adwait.website.repositories.NotesRepository;
 import in.adwait.website.repositories.UserRepository;
 import in.adwait.website.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping(path = "notes")
 public class NotesController {
 
