@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NotesRepository extends MongoRepository<Note, String> {
-    public Optional<Note> findById(String id);
+    Optional<Note> findById(String id);
 
-    public Optional<Note> findByTitle(String title);
+    Optional<Note> findByTitle(String title);
 
-    public List<Note> findByTopic(String topic);
+    List<Note> findByTopic(String topic);
 
-    public List<Note> findByUserId(Long userId);
+    List<Note> findByUserId(Long userId);
 }

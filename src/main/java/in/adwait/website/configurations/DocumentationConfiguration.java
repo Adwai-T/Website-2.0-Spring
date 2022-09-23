@@ -35,7 +35,7 @@ public class DocumentationConfiguration {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("Admin")
-                .pathsToMatch("/admin/**")
+                .pathsToMatch("/account/admin/**", "/contact/**")
                 .build();
     }
 
