@@ -25,7 +25,7 @@ import java.util.Arrays;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private String websiteUrl= "https//adwait.in";
+    private String websiteUrl= "https://adwait.in";
     private String localTestUrl = "http://localhost:4200";
     private String localSpringUrl = "http://localhost:8080";
 
