@@ -25,11 +25,11 @@ public class Comment {
     private String topic;
 
     @Field(value = "userId")
-    private String user;
+    private Long user;
 
     private Date date;
 
-    public Comment(String comment, String topic, String user) {
+    public Comment(String comment, String topic, Long user) {
         this.comment = comment;
         this.topic = topic;
         this.user = user;

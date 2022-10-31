@@ -28,6 +28,7 @@ public class JwtService {
 
         Map<String, Object> payload = new HashMap<>();
         payload.put("id", user.getId());
+        payload.put("role", user.getAuthority());
 
         String token = JWT.create()
                 .withIssuer(provider)
@@ -35,7 +36,6 @@ public class JwtService {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 36000000))//10hrs
                 .withJWTId(generateJwtId(user).toString())
                 .withSubject(user.getUsername())
-                .withAudience(user.getAuthority())
                 .withPayload(payload)
                 .sign(algorithm);
         return token;

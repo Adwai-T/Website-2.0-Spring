@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/auth", "/home", "/account/new", "/contact/send").permitAll() // --- public
+                .antMatchers("/", "/auth", "/home", "/account/new", "/contact/send", "/comments/**").permitAll() // --- public
                 .antMatchers( "/v3/api-docs**", "/v3/api-docs/**","/swagger-ui**", "/swagger-ui/**", "/swagger-resources/**").permitAll()// --- Swagger ---
                 .antMatchers("/account/admin/**", "/contact/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/account/member/**", "/notes/**").hasAnyAuthority("ADMIN", "MEMBER")

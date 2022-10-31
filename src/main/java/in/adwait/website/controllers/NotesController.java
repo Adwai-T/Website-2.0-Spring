@@ -34,7 +34,10 @@ public class NotesController {
             throws UserNotMemberException
     {
 
-        Long userId = Long.parseLong(jwtService.verify(jwtHeader).getClaim("id").toString());
+        Long userId = Long.parseLong(jwtService
+                .verify(jwtHeader)
+                .getClaim("id")
+                .toString());
 
         if(userId == null)
             return ResponseEntity.badRequest()
